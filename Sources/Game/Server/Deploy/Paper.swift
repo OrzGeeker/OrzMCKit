@@ -9,7 +9,7 @@ import JokerKits
 import Utils
 import Foundation
 import ConsoleKit
-import PaperMCAPI
+import DownloadAPI
 
 enum PaperServerError: Error {
     case versionRespFailed
@@ -99,8 +99,10 @@ public struct PaperServer: Server {
         let console = serverInfo.console
         let loadingBar = console?.loadingBar(title: "获最最新构建版本")
         loadingBar?.start()
-        guard let (build, name, _) = try await client.latestBuildApplication(project: .paper,
-                                                                                    version: version)
+        guard let (build, name, _, _, _) = try await client.latestBuildInfo(
+            project: .paper,
+            version: version
+        )
         else {
             loadingBar?.fail()
             return nil
@@ -119,20 +121,26 @@ public struct PaperServer: Server {
         if !FileManager.default.fileExists(atPath: jarFileURL.path()) {
             let progressBar = console?.progressBar(title: "正在下载服务端文件")
             progressBar?.start()
-            guard let (jar, total) = try await client.downloadLatestBuild(project: .paper,
-                                                                                 version: version,
-                                                                                 build: build,
-                                                                                 name: name)
+            guard let (dataStream, total) = try await client.downloadBuild(
+                project: DownloadAPIClient.Project.paper,
+                version: version,
+                build: build,
+                bufferSize: 512 * 1024)
             else {
                 progressBar?.fail()
                 return nil
             }
 
             var jarData = Data()
-            for try await byteChunk in jar {
-                jarData.append(Data(byteChunk))
-                let progress = Double(jarData.count) / Double(total)
-                progressBar?.activity.currentProgress = progress
+            for try await byteChunkResult in dataStream {
+                switch byteChunkResult {
+                case .success(let byteChunk):
+                    jarData.append(byteChunk)
+                    let progress = Double(jarData.count) / Double(total)
+                    progressBar?.activity.currentProgress = progress
+                case .failure(let error):
+                    throw error
+                }
             }
             progressBar?.succeed()
 
@@ -150,5 +158,5 @@ public struct PaperServer: Server {
         return process
     }
 
-    private let client = PaperMCAPI()
+    private let client = DownloadAPIClient()
 }

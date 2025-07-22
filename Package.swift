@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/OrzGeeker/OrzSwiftKit.git", from: "0.0.12"),
-        .package(url: "https://github.com/wangzhizhou/PaperMC.git", from: "0.0.5"),
+        .package(url: "https://github.com/wangzhizhou/PaperMC.git", from: "0.0.8"),
         .package(url: "https://github.com/wangzhizhou/MojangAPI.git", from: "0.0.4"),
     ],
     targets: [
@@ -33,7 +33,7 @@ let package = Package(
         .target(name: "Game", dependencies: [
             "MojangAPI",
             "Fabric",
-            .product(name: "PaperMCAPI", package: "PaperMC"),
+            .product(name: "DownloadAPI", package: "PaperMC"),
             .product(name: "HangarAPI", package: "PaperMC"),
             .product(name: "Utils", package: "OrzSwiftKit"),
         ]),

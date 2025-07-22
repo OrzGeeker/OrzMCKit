@@ -41,17 +41,20 @@ public extension PaperPlugin {
     static let all = [
         "GetMeHome",
         "Geyser",
-        "GriefPreventtion",
+        "Floodgate",
+        "GriefPrevention",
         "LoginSecurity",
         "LuckPerms",
         "SkinsRestorer",
         "Vault",
         "ViaBackwards",
         "ViaVersion",
+        "ViaRewind",
         "WorldEdit",
         "WorldGuard",
-        "Essentials",
-        "DeathChest"
+        "EssentialsX",
+        "DeathChest",
+        "SimpleVoiceChat",
     ]
     
     func allPlugin () async throws -> [PluginProject] {

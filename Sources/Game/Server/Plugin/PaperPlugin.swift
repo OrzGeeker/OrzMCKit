@@ -19,19 +19,21 @@ public struct PaperPlugin {
         )
     }
     
-    public func latesetVersionDownload(of project: PluginProject, version: String? = nil) async throws -> PluginPlatformVersionDownload? {
+    public func latesetReleaseVersionDownload(of project: PluginProject, version: String? = nil) async throws -> PluginPlatformVersionDownload? {
         let platformName = platform.rawValue
         guard let name = project.name,
-              let latestVersion = try await HangarAPIClient().versions(for: name)?.first
+              let latestReleaseVersionName = try await HangarAPIClient().latestReleaseVersion(for: name),
+              let latestReleaseVersion = try await HangarAPIClient().version(for: name, versionName: latestReleaseVersionName)
         else {
             return nil
         }
+        
         if let version,
-           let platformDependencies = latestVersion.platformDependencies?.additionalProperties[platformName],
+           let platformDependencies = latestReleaseVersion.platformDependencies?.additionalProperties[platformName],
            !platformDependencies.contains(version) {
             return nil
         }
-        let platformVersionDownload = latestVersion.downloads?.additionalProperties[platformName]
+        let platformVersionDownload = latestReleaseVersion.downloads?.additionalProperties[platformName]
         return platformVersionDownload
     }
 }
@@ -54,7 +56,7 @@ public extension PaperPlugin {
         "WorldGuard",
         "EssentialsX",
         "DeathChest",
-        "SimpleVoiceChat",
+        "OrzMC",
     ]
     
     func allPlugin () async throws -> [PluginProject] {
@@ -109,13 +111,14 @@ public extension PluginProject {
 import JokerKits
 public extension PluginProject {
     func downloadItem(outputFileDirURL: URL, version: String?) async throws -> DownloadItemInfo? {
-        let latestPlatformVersionDownload = try await PaperPlugin().latesetVersionDownload(of: self, version: version)
-        guard let downloadURL = latestPlatformVersionDownload?.downloadURL,
-              let pluginName = self.name
+        let latestPlatformDownload = try await PaperPlugin().latesetReleaseVersionDownload(of: self, version: version)
+        guard let downloadURL = latestPlatformDownload?.downloadURL,
+              let pluginName = (latestPlatformDownload?.fileInfo?.name ?? self.name)
         else {
             return nil
         }
-        let outputFileName = pluginName + ".jar"
+        let jarSuffix = ".jar"
+        let outputFileName = pluginName.hasSuffix(jarSuffix) ? pluginName : pluginName.appending(jarSuffix)
         let outputFileURL = outputFileDirURL.appending(path: outputFileName)
         return DownloadItemInfo(sourceURL: downloadURL, dstFileURL: outputFileURL)
     }

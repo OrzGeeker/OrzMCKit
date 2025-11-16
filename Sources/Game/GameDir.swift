@@ -40,6 +40,7 @@ public enum GameDir {
     case clientLogConfig(version: String, type: String = defaultClientType)
     case server(version: String, type: String = defaultServerType)
     case serverPlugin(version: String, type: String = defaultServerType)
+    case serverPluginUpdate(version: String, type: String = defaultServerType)
     
     private var pathComponents: [String] {
         switch self {
@@ -78,6 +79,8 @@ public enum GameDir {
             return GameDir.gameVersion(version: version).pathComponents + ["server", type]
         case .serverPlugin(let version, let type):
             return GameDir.server(version: version, type: type).pathComponents + ["plugins"]
+        case .serverPluginUpdate(let version, let type):
+            return GameDir.serverPlugin(version: version, type: type).pathComponents + ["update"]
         }
     }
     

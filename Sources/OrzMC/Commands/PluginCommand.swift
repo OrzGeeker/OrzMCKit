@@ -61,11 +61,12 @@ struct PluginCommand: AsyncCommand {
         }
         else {
             let outputPath = signature.output
-            guard let outputDirFilePath = outputPath, outputDirFilePath.isDirPath()
+            guard let outputDirFilePath = outputPath
             else {
                 console.error(Constants.uiOutputUnspecifyOutputPath.string)
                 return
             }
+            try outputDirFilePath.makeDirIfNeed()
             let outputDirFileURL = URL(fileURLWithPath: outputDirFilePath)
             let progressBar = console.progressBar(title: Constants.uiOutputDownloading.string)
             let allPlugins = try await plugin.allPlugin()

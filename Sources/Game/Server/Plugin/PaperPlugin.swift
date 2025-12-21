@@ -40,24 +40,30 @@ public struct PaperPlugin {
 
 public extension PaperPlugin {
     
-    static let all = [
-        "GetMeHome",
-        "Geyser",
-        "Floodgate",
-        "GriefPrevention",
-        "LoginSecurity",
-        "LuckPerms",
-        "SkinsRestorer",
-        "Vault",
-        "ViaBackwards",
-        "ViaVersion",
-        "ViaRewind",
-        "WorldEdit",
-        "WorldGuard",
-        "EssentialsX",
-        "DeathChest",
-        "OrzMC",
-    ]
+    static let all = {
+        let adminPlugins: [String] = [
+            "LuckPerms", // 权限管理插件
+            "OrzMC", // 服务器管理插件
+        ]
+        let playerPlugins: [String] = [
+            "LoginSecurity-del_0", // 登录安全插件
+            "DeathChest", // 死亡掉落保护插件
+            "GetMeHome", // 传送回家插件
+            "SkinsRestorer", // 皮肤恢复插件
+            "GriefPrevention", // 领地保护插件
+            "Essentials", // 基础功能插件
+            "WorldEdit", // 地图编辑插件
+            "WorldGuard", // 地图保护插件
+            "Vault", // 经济插件依赖
+        ]
+        let crossPlatformVersionsPlugins: [String] = [
+            "ViaVersion", // 新版本Java客户端连接旧版本服务器
+            "ViaBackwards", // 旧版本Java客户端连接旧版本服务器
+            "ViaRewind", // 旧版本Java客户端连接新版本服务器
+            "Geyser", // Bedrock客户端连接Java服务器
+        ]
+        return adminPlugins + playerPlugins + crossPlatformVersionsPlugins
+    }()
     
     func allPlugin () async throws -> [PluginProject] {
         var ret = [PluginProject]()

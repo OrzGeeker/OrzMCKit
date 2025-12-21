@@ -46,7 +46,7 @@ public extension PaperPlugin {
             "OrzMC", // 服务器管理插件
         ]
         let playerPlugins: [String] = [
-            "LoginSecurity-del_0", // 登录安全插件
+            "LoginSecurity", // 登录安全插件
             "DeathChest", // 死亡掉落保护插件
             "GetMeHome", // 传送回家插件
             "SkinsRestorer", // 皮肤恢复插件

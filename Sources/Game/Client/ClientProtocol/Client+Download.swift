@@ -52,7 +52,7 @@ public extension Client {
         
         // 游戏客户端资源对象文件
         for object in objects.additionalProperties.values {
-            let assetObjURL = object.URL
+            let assetObjURL = object.resourceURL
             let assetFilePath = GameDir.assetsObj(version: clientInfo.version.id, path: object.dirName).filePath(object.fileName)
             let assetFileURL = URL(fileURLWithPath: assetFilePath)
             let assetFileItem = DownloadItemInfo(sourceURL: assetObjURL, dstFileURL: assetFileURL, hash: object.hash, hashType: .sha1)

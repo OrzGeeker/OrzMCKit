@@ -1,5 +1,5 @@
 {
-  "originHash" : "370d750181f2a0bb8e703bd1b2037b18e9b8c8e4a25a0cb6e0d3b8863245a103",
+  "originHash" : "5b0ca3f7d9cc5ed39e9a9f22decd6ba74292f0d6e10cb472eccaf8c24f657e28",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wangzhizhou/MojangAPI.git",
       "state" : {
-        "revision" : "aad74461dfd09019f9ac5c600c85cc8536dddfc5",
-        "version" : "0.1.0"
+        "revision" : "2fe2a5cd423f1ed0759a4c0d87e27dc59b3977b8",
+        "version" : "0.1.1"
       }
     },
     {

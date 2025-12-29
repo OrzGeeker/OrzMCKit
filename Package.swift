@@ -1,5 +1,4 @@
 // swift-tools-version:6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -14,10 +13,9 @@ let package = Package(
         .library(name: "Fabric", targets: ["Fabric"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/OrzGeeker/OrzSwiftKit.git", from: "0.0.17"),
+        .package(url: "https://github.com/wangzhizhou/MojangAPI.git", from: "0.1.1"),
         .package(url: "https://github.com/wangzhizhou/PaperMC.git", from: "0.0.8"),
-        .package(url: "https://github.com/wangzhizhou/MojangAPI.git", from: "0.0.4"),
+        .package(url: "https://github.com/OrzGeeker/OrzSwiftKit.git", from: "0.0.17"),
     ],
     targets: [
         // MARK: Command Line executable

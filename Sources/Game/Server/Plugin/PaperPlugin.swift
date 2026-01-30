@@ -51,6 +51,7 @@ public extension PaperPlugin {
             "GetMeHome", // 传送回家插件
             "SkinsRestorer", // 皮肤恢复插件
             "GriefPrevention", // 领地保护插件
+            "EzShops", // 交易系统
             "Essentials", // 基础功能插件
             "WorldEdit", // 地图编辑插件
             "WorldGuard", // 地图保护插件
